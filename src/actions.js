@@ -28,10 +28,6 @@ export function changeSortItem(item) {
   return { type: "CHANGE__SORT_ITEM", item }
 }
 
-export function changeSortFunc(func) {
-  return { type: "CHANGE__SORT_FUNC", func }
-}
-
 export function toggleSortOrder() {
   return { type: "TOGGLE__SORT_ORDER" }
 }

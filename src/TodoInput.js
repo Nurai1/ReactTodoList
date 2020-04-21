@@ -11,7 +11,6 @@ export const TodoInput = ({
   let todoDate = '';
   const addTodo = () => {
     if (!todoText.value || !todoDate.value){
-      console.dir(todoDate);
       todoText.value?(todoDate.classList.add("error")):(todoText.classList.add("error"))
       return;
     }

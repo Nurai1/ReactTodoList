@@ -37,10 +37,7 @@ const todosReducer = function(state=[], action) {
     case "TOGGLE__COMPLETE":
       return state.map(function(val) {
               if (action.index===val.index){
-                return {
-                  ...val,
-                  completed: !val.completed
-                }
+                return Object.assign({}, val, {completed: !val.completed});
               }
               return val;
             })
@@ -53,17 +50,12 @@ const todosReducer = function(state=[], action) {
   }
 }
 
-const sortTodosReducer = function(state={item:"", func: ()=>{}, fromTop: true}, action) {
+const sortTodosReducer = function(state={item:"", fromTop: true}, action) {
   switch(action.type) {
     case "CHANGE__SORT_ITEM":
       return {
         ...state,
         item: action.item,
-      }
-    case "CHANGE__SORT_FUNC":
-      return {
-        ...state,
-        func: action.func,
       }
     case "TOGGLE__SORT_ORDER":
       return{
@@ -76,7 +68,7 @@ const sortTodosReducer = function(state={item:"", func: ()=>{}, fromTop: true}, 
 }
 
 const reducer = function(state={}, action) {
-  return {
+  return {//localStorage.setItem("todos", todosReducer(state.todos, action))
     todos: todosReducer(state.todos, action),
     sortTodos: sortTodosReducer(state.sortTodos, action),
   }

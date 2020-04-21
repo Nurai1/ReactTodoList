@@ -7,6 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+li{
+  list-style-type: none;
+}
+
 .error{
   border: 1px solid red;
 }

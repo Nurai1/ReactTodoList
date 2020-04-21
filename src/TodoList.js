@@ -8,28 +8,28 @@ export const TodoList = ({
   sortTodos,
   dispatch
 }) => {
+  localStorage.setItem("todos", JSON.stringify(todos));
+  localStorage.setItem("sortTodos", JSON.stringify(sortTodos));
 
   const initiliazeSortFunc = function(sortItem) {
     if (sortTodos.fromTop){
-      dispatch(
-        actions.changeSortFunc(function(a,b){
+      return function(a,b){
           if (a[sortItem]>b[sortItem])
             return 1;
           else
             return -1;
-        }));
+        };
     }
     else {
-      dispatch(
-        actions.changeSortFunc(function(b,a){
+      return function(b,a){
           if (a[sortItem]>b[sortItem])
             return 1;
           else
             return -1;
-        }));
+        };
     }
   }
-
+  console.log(JSON.parse(localStorage.getItem("todos")));
   return (
     <div>
     <h3>Сортировка:</h3>
@@ -37,7 +37,6 @@ export const TodoList = ({
       По тексту:
       <input type="radio" name="sortFunc" onClick={()=>{
           dispatch(actions.changeSortItem("text"));
-          initiliazeSortFunc(sortTodos.item);
         }}
       />
     </label>
@@ -45,8 +44,6 @@ export const TodoList = ({
       По дате:
       <input type="radio" name="sortFunc" onClick={()=>{
           dispatch(actions.changeSortItem("date"));
-          console.log(sortTodos.item); // "" -> should be 'date'
-          initiliazeSortFunc(sortTodos.item);
         }}
       />
     </label>
@@ -54,16 +51,19 @@ export const TodoList = ({
       Изменить направление:
       <input type="checkbox" onClick={()=>{
           dispatch(actions.toggleSortOrder());
-          initiliazeSortFunc(sortTodos.item);
         }}
       />
     </label>
     <ul>
       {
-        todos.sort(sortTodos.func).map((todo)=>{
-          console.log(sortTodos.func);
+        JSON.parse(localStorage.getItem("todos")).sort(initiliazeSortFunc(sortTodos.item)).map((todo)=>{
+          let toDoIndex= todo.index;
           return (todo.filterText && todo.filterDate)?
-            <li key={todo.index}>Текст: {todo.text.toString()} Дата: {todo.date.toString()}</li>:""
+            <li key={todo.index} >
+              <input type="checkbox" onClick={()=>{dispatch(actions.toggleCompleteState(toDoIndex))}} />
+              Текст: {todo.text.toString()} Дата: {todo.date.toString()}
+              <input onClick={()=>{dispatch(actions.deleteToDo(toDoIndex))}} type="button" value="Удалить" />
+            </li>:""
         })
       }
     </ul>
