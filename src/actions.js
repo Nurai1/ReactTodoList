@@ -16,12 +16,12 @@ export function clearFilters() {
   return { type: "CLEAR__FILTERS" };
 }
 
-export function toggleCompleteState(index) {
-  return { type: "TOGGLE__COMPLETE", index };
+export function toggleCompleteState(id) {
+  return { type: "TOGGLE__COMPLETE", id };
 }
 
-export function deleteToDo(index) {
-  return { type: "DELETE__TODO", index }
+export function deleteToDo(id) {
+  return { type: "DELETE__TODO", id }
 }
 
 export function changeSortItem(item) {

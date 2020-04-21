@@ -1,6 +1,15 @@
-import { makeIndexCounter } from './utilities';
+import { makeIdCounter } from './utilities';
 
-const indexCounter = makeIndexCounter();
+let storeFromLocalStore = JSON.parse(localStorage.getItem("reducer"));
+
+let maxId=0;
+if(storeFromLocalStore){
+  for(let val of storeFromLocalStore.todos){
+    if(val.id>maxId)
+      maxId=val.id;
+  }
+}
+const idCounter = makeIdCounter(maxId+1);
 
 const todosReducer = function(state=[], action) {
   switch(action.type){
@@ -8,7 +17,7 @@ const todosReducer = function(state=[], action) {
       return [
           ...state,
           {
-            index: indexCounter(),
+            id: idCounter(),
             text: action.text,
             date: action.date,
             completed: false,
@@ -36,21 +45,21 @@ const todosReducer = function(state=[], action) {
         })
     case "TOGGLE__COMPLETE":
       return state.map(function(val) {
-              if (action.index===val.index){
+              if (action.id===val.id){
                 return Object.assign({}, val, {completed: !val.completed});
               }
               return val;
             })
     case "DELETE__TODO":
       return state.filter(function(val) {
-              return action.index!==val.index
+              return action.id!==val.id
             })
     default:
       return state;
   }
 }
 
-const sortTodosReducer = function(state={item:"", fromTop: true}, action) {
+const sortingDetailsReducer = function(state={item:"", fromTop: false}, action) {
   switch(action.type) {
     case "CHANGE__SORT_ITEM":
       return {
@@ -67,10 +76,12 @@ const sortTodosReducer = function(state={item:"", fromTop: true}, action) {
   }
 }
 
-const reducer = function(state={}, action) {
-  return {//localStorage.setItem("todos", todosReducer(state.todos, action))
+const reducer = function(
+  state=(storeFromLocalStore)?
+storeFromLocalStore:{}, action) {
+  return {
     todos: todosReducer(state.todos, action),
-    sortTodos: sortTodosReducer(state.sortTodos, action),
+    sortingDetails: sortingDetailsReducer(state.sortingDetails, action),
   }
 }
 

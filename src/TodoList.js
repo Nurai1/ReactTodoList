@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from './actions';
 
 export const TodoList = ({
+  reducer,
   todos,
-  sortTodos,
+  sortingDetails,
   dispatch
 }) => {
-  localStorage.setItem("todos", JSON.stringify(todos));
-  localStorage.setItem("sortTodos", JSON.stringify(sortTodos));
+  let storeFromLocalStore = JSON.parse(localStorage.getItem("reducer"));
+
+  useEffect(() => {
+      localStorage.setItem("reducer", JSON.stringify(reducer));
+  });
 
   const initiliazeSortFunc = function(sortItem) {
-    if (sortTodos.fromTop){
+    if (sortingDetails.fromTop){
       return function(a,b){
           if (a[sortItem]>b[sortItem])
             return 1;
@@ -29,40 +33,47 @@ export const TodoList = ({
         };
     }
   }
-  console.log(JSON.parse(localStorage.getItem("todos")));
   return (
     <div>
     <h3>Сортировка:</h3>
     <label htmlFor="">
       По тексту:
-      <input type="radio" name="sortFunc" onClick={()=>{
+      <input type="radio" name="sortFunc"
+        checked={sortingDetails.item==="text"}
+        onChange={()=>{}}
+        onClick={()=>{
           dispatch(actions.changeSortItem("text"));
         }}
       />
     </label>
     <label htmlFor="">
       По дате:
-      <input type="radio" name="sortFunc" onClick={()=>{
+      <input type="radio" name="sortFunc"
+        checked={sortingDetails.item==="date"}
+        onChange={()=>{}}
+        onClick={()=>{
           dispatch(actions.changeSortItem("date"));
         }}
       />
     </label>
     <label htmlFor="">
       Изменить направление:
-      <input type="checkbox" onClick={()=>{
+      <input type="checkbox"
+        checked={sortingDetails.fromTop}
+        onChange={()=>{
           dispatch(actions.toggleSortOrder());
         }}
       />
     </label>
     <ul>
       {
-        JSON.parse(localStorage.getItem("todos")).sort(initiliazeSortFunc(sortTodos.item)).map((todo)=>{
-          let toDoIndex= todo.index;
+        todos.sort(initiliazeSortFunc(sortingDetails.item)).map((todo)=>{
+          let toDoId= todo.id;
           return (todo.filterText && todo.filterDate)?
-            <li key={todo.index} >
-              <input type="checkbox" onClick={()=>{dispatch(actions.toggleCompleteState(toDoIndex))}} />
+            <li key={todo.id} >
+              <input type="checkbox" onClick={()=>{dispatch(actions.toggleCompleteState(toDoId))}} />
               Текст: {todo.text.toString()} Дата: {todo.date.toString()}
-              <input onClick={()=>{dispatch(actions.deleteToDo(toDoIndex))}} type="button" value="Удалить" />
+              <input onClick={()=>{dispatch(actions.deleteToDo(toDoId))}} type="button" value="Удалить" />
             </li>:""
         })
       }
@@ -72,8 +83,9 @@ export const TodoList = ({
 }
 
 const mapStateToProps = (state) => ({
+  reducer: state,
   todos: state.todos,
-  sortTodos: state.sortTodos
+  sortingDetails: state.sortingDetails
 });
 
 const TodoListContainer = connect(

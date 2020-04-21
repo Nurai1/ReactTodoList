@@ -1,6 +1,6 @@
-export function makeIndexCounter() {
-  let index=0;
+export function makeIdCounter(idx) {
+  let id=idx;
   return function() {
-    return index++;
+    return id++;
   }
 }
