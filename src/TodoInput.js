@@ -9,28 +9,29 @@ export const TodoInput = ({
 }) => {
   let todoText = '';
   let todoDate = '';
-  const addTodo = () => {
+  const addTodo = (e) => {
+    e.preventDefault();
     if (!todoText.value || !todoDate.value){
       todoText.value?(todoDate.classList.add("error")):(todoText.classList.add("error"))
       return;
     }
     todoDate.classList.remove("error");
     todoText.classList.remove("error");
-    dispatch(actions.addToDo(todoText.value, todoDate.value))
+    dispatch(actions.addToDo(todoText.value, todoDate.value));
   };
 
   return (
-    <form className="todo__input">
+    <form className="todo__form" onSubmit={addTodo}>
       <h2>ToDo App</h2>
-      <label htmlFor="">
+      <label className="todo__text" htmlFor="">
         Введите текст задания:
-        <input ref={(input)=>{todoText=input}} type="text"/>
+        <input className="todo__input" ref={(input)=>{todoText=input}} type="text"/>
       </label>
-      <label htmlFor="">
+      <label className="todo__text" htmlFor="">
         Введите дату:
-        <input ref={(input)=>{todoDate=input}} type="date"/>
+        <input className="todo__input" ref={(input)=>{todoDate=input}} type="date"/>
       </label>
-      <input onClick={addTodo} type="button" value="Добавить" />
+      <input className="todo__submit" type="submit" value="Добавить" />
     </form>
   );
 }
