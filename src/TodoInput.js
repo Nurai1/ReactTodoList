@@ -4,23 +4,23 @@ import { connect } from 'react-redux';
 import * as actions from './actions';
 
 export const TodoInput = ({
-  todos,
-  dispatch
+  onSubmit
 }) => {
   let todoText = '';
   let todoDate = '';
-  const addTodo = () => {
+  const addTodo = (e) => {
+    e.preventDefault();
     if (!todoText.value || !todoDate.value){
       todoText.value?(todoDate.classList.add("error")):(todoText.classList.add("error"))
       return;
     }
     todoDate.classList.remove("error");
     todoText.classList.remove("error");
-    dispatch(actions.addToDo(todoText.value, todoDate.value))
-  };
+    onSubmit(todoText.value, todoDate.value);
+  }
 
   return (
-    <form className="todo__input">
+    <form className="todo__input" onSubmit={addTodo} >
       <h2>ToDo App</h2>
       <label htmlFor="">
         Введите текст задания:
@@ -30,9 +30,15 @@ export const TodoInput = ({
         Введите дату:
         <input ref={(input)=>{todoDate=input}} type="date"/>
       </label>
-      <input onClick={addTodo} type="button" value="Добавить" />
+      <input type="submit" value="Добавить" />
     </form>
   );
 }
 
-export default connect()(TodoInput);
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (text, date) => {
+    dispatch(actions.addToDo(text, date));
+  }
+});
+
+export default connect(null, mapDispatchToProps)(TodoInput);
