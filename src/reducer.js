@@ -1,7 +1,7 @@
 import { makeIdCounter } from './utilities';
 
 let storeFromLocalStore = JSON.parse(localStorage.getItem("reducer"));
-
+console.log(storeFromLocalStore);
 let maxId=0;
 if(storeFromLocalStore){
   for(let val of storeFromLocalStore.todos){
@@ -10,6 +10,24 @@ if(storeFromLocalStore){
   }
 }
 const idCounter = makeIdCounter(maxId+1);
+
+const todoCurrentValuesReducer = function(state={}, action) {
+  switch(action.type){
+    case "ADD_CURRENT_TEXT":
+      return {
+        ...state,
+        text: action.value
+      }
+
+    case "ADD_CURRENT_DATE":
+      return {
+        ...state,
+        date: action.value
+      }
+    default:
+      return state;
+  }
+}
 
 const todosReducer = function(state=[], action) {
   switch(action.type){
@@ -37,7 +55,7 @@ const todosReducer = function(state=[], action) {
           if (val.date !== action.date){
             return {...val, filterDate: false}
           }
-          return val;
+          return {...val, filterDate: true}
         })
     case "CLEAR__FILTERS":
       return state.map(function(val) {
@@ -76,12 +94,13 @@ const sortingDetailsReducer = function(state={item:"", fromTop: false}, action) 
   }
 }
 
-const reducer = function(
-  state=(storeFromLocalStore)?
-storeFromLocalStore:{}, action) {
+let defaultState = storeFromLocalStore?storeFromLocalStore:{};
+
+const reducer = function(state=defaultState, action) {
   return {
+    todoCurrentValues: todoCurrentValuesReducer(state.todoCurrentValues, action),
     todos: todosReducer(state.todos, action),
-    sortingDetails: sortingDetailsReducer(state.sortingDetails, action),
+    sortingDetails: sortingDetailsReducer(state.sortingDetails, action)
   }
 }
 

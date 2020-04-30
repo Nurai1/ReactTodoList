@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from './actions';
+import { changeSortItem, toggleSortOrder, toggleCompleteState, deleteToDo } from './actions';
 
 export const TodoList = ({
   reducer,
@@ -74,7 +74,8 @@ export const TodoList = ({
               <input type="checkbox" onClick={()=>{onCheckboxOfCompleteStateClick(toDoId)}} />
               Текст: {todo.text.toString()} Дата: {todo.date.toString()}
               <input onClick={()=>{onDeleteBtnClick(toDoId)}} type="button" value="Удалить" />
-            </li>:""
+            </li>
+            :null
         })
       }
     </ul>
@@ -89,18 +90,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onRadioBtnClick: (item) => {
-    dispatch(actions.changeSortItem(item));
-  },
-  onCheckboxOfDirectionClick: () => {
-    dispatch(actions.toggleSortOrder());
-  },
-  onCheckboxOfCompleteStateClick: (id) => {
-    dispatch(actions.toggleCompleteState(id))
-  },
-  onDeleteBtnClick: (id) => {
-    dispatch(actions.deleteToDo(id));
-  }
+  onRadioBtnClick: (item) => dispatch(changeSortItem(item)),
+  onCheckboxOfDirectionClick: () => dispatch(toggleSortOrder()),
+  onCheckboxOfCompleteStateClick: (id) => dispatch(toggleCompleteState(id)),
+  onDeleteBtnClick: (id) => dispatch(deleteToDo(id))
 });
 
 const TodoListContainer = connect(
