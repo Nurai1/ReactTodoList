@@ -12,15 +12,15 @@ export const addToDo = function(text, date) {
   return { type: "ADD_TODO", text, date };
 }
 
-export const filterFromText = function(text) {
+export const setVisibilityFilterFromText = function(text) {
   return { type: "FILTER__TEXT", text };
 }
 
-export const filterFromDate = function(date) {
+export const setVisibilityFilterFromDate = function(date) {
   return { type: "FILTER__DATE", date };
 }
 
-export const clearFilters = function() {
+export const clearVisibilityFilters = function() {
   return { type: "CLEAR__FILTERS" };
 }
 

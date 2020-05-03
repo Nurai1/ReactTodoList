@@ -15,13 +15,11 @@ export const TodoInput = ({
   const addTodo = (e) => {
     e.preventDefault();
     if (!todoCurrentValues.date || !todoCurrentValues.text){
-      // todoText.value?(todoDate.classList.add("error")):(todoText.classList.add("error"))
       isErrorClassNecessary = true;
       return;
     }
-    // todoDate.classList.remove("error");
-    // todoText.classList.remove("error");
-    onSubmit(todoCurrentValues.date, todoCurrentValues.text);
+
+    onSubmit(todoCurrentValues.text, todoCurrentValues.date);
     isErrorClassNecessary = false;
   }
   return (

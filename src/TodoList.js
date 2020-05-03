@@ -7,6 +7,7 @@ export const TodoList = ({
   reducer,
   todos,
   sortingDetails,
+  visibilityFilters,
   onRadioBtnClick,
   onCheckboxClick,
   onCheckboxOfCompleteStateClick,
@@ -69,7 +70,7 @@ export const TodoList = ({
       {
         todos.sort(initiliazeSortFunc(sortingDetails.item)).map((todo)=>{
           let toDoId= todo.id;
-          return (todo.filterText && todo.filterDate)?
+          return (todo.text.includes(visibilityFilters.text) && todo.date.includes(visibilityFilters.date))?
             <li key={todo.id} >
               <input type="checkbox" onClick={()=>{onCheckboxOfCompleteStateClick(toDoId)}} />
               Текст: {todo.text.toString()} Дата: {todo.date.toString()}
@@ -86,7 +87,8 @@ export const TodoList = ({
 const mapStateToProps = (state) => ({
   reducer: state,
   todos: state.todos,
-  sortingDetails: state.sortingDetails
+  sortingDetails: state.sortingDetails,
+  visibilityFilters: state.visibilityFilters
 });
 
 const mapDispatchToProps = (dispatch) => ({

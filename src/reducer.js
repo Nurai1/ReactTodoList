@@ -39,28 +39,8 @@ const todosReducer = function(state=[], action) {
             text: action.text,
             date: action.date,
             completed: false,
-            filterText: true,
-            filterDate: true
           }
         ]
-    case "FILTER__TEXT":
-      return state.map(function(val) {
-          if (!val.text.includes(action.text)){
-            return {...val, filterText: false}
-          }
-            return {...val, filterText: true}
-        })
-    case "FILTER__DATE":
-      return state.map(function(val) {
-          if (val.date !== action.date){
-            return {...val, filterDate: false}
-          }
-          return {...val, filterDate: true}
-        })
-    case "CLEAR__FILTERS":
-      return state.map(function(val) {
-            return {...val, filterText: true, filterDate: true}
-        })
     case "TOGGLE__COMPLETE":
       return state.map(function(val) {
               if (action.id===val.id){
@@ -74,6 +54,28 @@ const todosReducer = function(state=[], action) {
             })
     default:
       return state;
+  }
+}
+
+const visibilityFilters = function(state={text: "", date: ""}, action) {
+  switch(action.type) {
+    case "FILTER__TEXT":
+      return {
+        ...state,
+        text: action.text
+      }
+    case "FILTER__DATE":
+      return {
+        ...state,
+        date: action.date
+      }
+    case "CLEAR__FILTERS":
+      return {
+        text: "",
+        date: ""
+      }
+    default:
+      return state
   }
 }
 
@@ -100,7 +102,8 @@ const reducer = function(state=defaultState, action) {
   return {
     todoCurrentValues: todoCurrentValuesReducer(state.todoCurrentValues, action),
     todos: todosReducer(state.todos, action),
-    sortingDetails: sortingDetailsReducer(state.sortingDetails, action)
+    sortingDetails: sortingDetailsReducer(state.sortingDetails, action),
+    visibilityFilters: visibilityFilters(state.visibilityFilters, action)
   }
 }
 
