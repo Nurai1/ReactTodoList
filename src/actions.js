@@ -13,29 +13,33 @@ export const addToDo = function(text, date) {
 }
 
 export const setVisibilityFilterFromText = function(text) {
-  return { type: "FILTER__TEXT", text };
+  return { type: "FILTER_TEXT", text };
 }
 
 export const setVisibilityFilterFromDate = function(date) {
-  return { type: "FILTER__DATE", date };
+  return { type: "FILTER_DATE", date };
 }
 
 export const clearVisibilityFilters = function() {
-  return { type: "CLEAR__FILTERS" };
+  return { type: "CLEAR_FILTERS" };
 }
 
 export const toggleCompleteState = function(id) {
-  return { type: "TOGGLE__COMPLETE", id };
+  return { type: "TOGGLE_COMPLETE", id };
 }
 
 export const deleteToDo = function(id) {
-  return { type: "DELETE__TODO", id }
+  return { type: "DELETE_TODO", id }
 }
 
 export const changeSortItem = function(item) {
-  return { type: "CHANGE__SORT_ITEM", item }
+  return { type: "CHANGE_SORT_ITEM", item }
 }
 
 export const toggleSortOrder = function() {
-  return { type: "TOGGLE__SORT_ORDER" }
+  return { type: "TOGGLE_SORT_ORDER" }
+}
+
+export const setInputErrorState = function(value) {
+  return {type: "SET_INPUT_ERROR_STATE", value}
 }

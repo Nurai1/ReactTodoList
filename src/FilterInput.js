@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { clearVisibilityFilters, setVisibilityFilterFromText, setVisibilityFilterFromDate } from './actions';
 
 export const FilterInput = ({
-  onBtnClick,
-  onTextInpChange,
+  clearVisibilityFilters,
+  setVisibilityFilterFromDate,
+  setVisibilityFilterFromText,
   onDateInpChange
 }) => {
 
@@ -14,21 +15,21 @@ export const FilterInput = ({
       <h3>Найдите нужные дела: </h3>
       <label htmlFor="">
         Фильтр по тексту
-        <input onChange={(e)=>onTextInpChange(e.target.value)} type="text"/>
+        <input onChange={(e)=>setVisibilityFilterFromText(e.target.value)} type="text"/>
       </label>
       <label htmlFor="">
         Фильтр по дате:
-        <input onChange={(e)=>onDateInpChange(e.target.value)} type="date"/>
+        <input onChange={(e)=>setVisibilityFilterFromDate(e.target.value)} type="date"/>
       </label>
-      <input value="Очистить все" type="button" onClick={onBtnClick}/>
+      <input value="Очистить все" type="button" onClick={clearVisibilityFilters}/>
     </form>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onBtnClick: () => dispatch(clearVisibilityFilters()),
-  onTextInpChange: (text) => dispatch(setVisibilityFilterFromText(text)),
-  onDateInpChange: (date) => dispatch(setVisibilityFilterFromDate(date)),
+  clearVisibilityFilters: () => dispatch(clearVisibilityFilters()),
+  setVisibilityFilterFromText: (text) => dispatch(setVisibilityFilterFromText(text)),
+  setVisibilityFilterFromDate: (date) => dispatch(setVisibilityFilterFromDate(date)),
 });
 
  export default connect(null, mapDispatchToProps)(FilterInput);;
