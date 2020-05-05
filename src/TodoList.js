@@ -13,6 +13,7 @@ export const TodoList = ({
   deleteToDo
 }) => {
 
+  let currentTodos = [...todos];
   const initiliazeSortFunc = function(sortItem) {
     if (sortingDetails.fromTop){
       return function(a,b){
@@ -41,7 +42,7 @@ export const TodoList = ({
 
   return (
     <div>
-    <h3>Сортировка:</h3>
+    <h3>Todo List</h3>
       <input type="button" name="sortFunc"
         value="Сортировка по тексту"
         onClick={()=>{
@@ -62,12 +63,17 @@ export const TodoList = ({
       />
     <ul>
       {
-        todos.sort(initiliazeSortFunc(sortingDetails.item)).map((todo)=>{
+        currentTodos.sort(initiliazeSortFunc(sortingDetails.item)).map((todo)=>{
           let toDoId= todo.id;
           return (todo.text.includes(visibilityFilters.text) && todo.date.includes(visibilityFilters.date))?
             <li key={todo.id} >
-              <input type="checkbox" onClick={()=>{toggleCompleteState(toDoId)}} />
-              Текст: {todo.text.toString()} Дата: {todo.date.toString()}
+              <input type="checkbox"
+              onChange={()=>{toggleCompleteState(toDoId)}}
+              checked={todo.completed?"checked":""}
+            />
+              <span className={todo.completed?"task task_completed":"task"}>
+                Текст: {todo.text.toString()} Дата: {todo.date.toString()}
+              </span>
               <input onClick={()=>{deleteToDo(toDoId)}} type="button" value="Удалить" />
             </li>
             :null

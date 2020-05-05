@@ -28,15 +28,15 @@ export const TodoInput = ({
   }
 
   return (
-    <form className="todo__input" onSubmit={addTodo} >
-      <h2>ToDo App</h2>
-      <label htmlFor="">
+    <form className="addForm" onSubmit={addTodo} >
+      <h3>Добавьте задание</h3>
+      <label className="addForm__text" htmlFor="">
         Введите текст задания:
         <input className={(!todoCurrentValues.text && inputErrorState.value)?"error":""}
           onChange={(e)=>addCurrentText(e.target.value)} type="text"
         />
       </label>
-      <label htmlFor="">
+      <label className="addForm__date" htmlFor="">
         Введите дату:
         <input className={(!todoCurrentValues.date && inputErrorState.value)?"error":""}
           onChange={(e)=>addCurrentDate(e.target.value)} type="date"

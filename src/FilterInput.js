@@ -11,17 +11,17 @@ export const FilterInput = ({
 }) => {
 
   return (
-    <form action="">
-      <h3>Найдите нужные дела: </h3>
+    <form className="filterForm">
+      <h3>Найдите нужные дела</h3>
       <label htmlFor="">
-        Фильтр по тексту
+        Фильтр по тексту:
         <input onChange={(e)=>setVisibilityFilterFromText(e.target.value)} type="text"/>
       </label>
       <label htmlFor="">
         Фильтр по дате:
         <input onChange={(e)=>setVisibilityFilterFromDate(e.target.value)} type="date"/>
       </label>
-      <input value="Очистить все" type="button" onClick={clearVisibilityFilters}/>
+      {/* <input value="Очистить все" type="button" onClick={clearVisibilityFilters}/>*/}
     </form>
   )
 }
