@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { clearVisibilityFilters, setVisibilityFilterFromText, setVisibilityFilterFromDate } from './actions';
+import {
+  clearVisibilityFilters,
+  setVisibilityFilterFromText,
+  setVisibilityFilterFromDate
+} from './../actions';
 
 export const FilterInput = ({
   clearVisibilityFilters,

@@ -6,7 +6,7 @@ import {
   addCurrentText,
   addToDo,
   setInputErrorState
-} from './actions';
+} from './../actions';
 
 export const TodoInput = ({
   todoCurrentValues,
@@ -32,13 +32,13 @@ export const TodoInput = ({
       <h3>Добавьте задание</h3>
       <label className="addForm__text" htmlFor="">
         Введите текст задания:
-        <input className={(!todoCurrentValues.text && inputErrorState.value)?"error":""}
+        <input className={(!todoCurrentValues.text && inputErrorState)?"error":""}
           onChange={(e)=>addCurrentText(e.target.value)} type="text"
         />
       </label>
       <label className="addForm__date" htmlFor="">
         Введите дату:
-        <input className={(!todoCurrentValues.date && inputErrorState.value)?"error":""}
+        <input className={(!todoCurrentValues.date && inputErrorState)?"error":""}
           onChange={(e)=>addCurrentDate(e.target.value)} type="date"
         />
       </label>

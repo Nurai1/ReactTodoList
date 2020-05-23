@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { changeSortItem, toggleSortOrder, toggleCompleteState, deleteToDo } from './actions';
+import {
+  changeSortItem,
+  toggleSortOrder,
+  toggleCompleteState,
+  deleteToDo
+} from './../actions';
 
 export const TodoList = ({
   todos,
@@ -43,19 +48,22 @@ export const TodoList = ({
   return (
     <div>
     <h3>Todo List</h3>
-      <input type="button" name="sortFunc"
+      <input type="button"
+        className="btn__sort_txt"
         value="Сортировка по тексту"
         onClick={()=>{
           sortingDetailsHandler("text");
         }}
       />
-      <input type="button" name="sortFunc"
+      <input type="button"
+        className="btn__sort_date"
         value="Сортировка по дате"
         onClick={()=>{
           sortingDetailsHandler("date");
         }}
       />
-      <input type="button" name="sortFunc"
+      <input type="button"
+        className="btn__sort_reset"
         value="Сброс сортировки"
         onClick={()=>{
           sortingDetailsHandler("");
